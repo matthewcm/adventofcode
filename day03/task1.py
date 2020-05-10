@@ -42,10 +42,10 @@ for i in pathOne:
 
 
 pathOneSet = set(pathList)
-        
 x = 0
 y = 0
 pathList = []
+
 for i in pathTwo:
     prevX = x
     prevY = y
