@@ -1,7 +1,7 @@
 import math
 
 
-paths_file = open('./input.txt', 'r')
+paths_file = open('input.txt', 'r')
 wire_lines = paths_file.read().split('\n')
 
 wire_a = wire_lines[0].split(',');

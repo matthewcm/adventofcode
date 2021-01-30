@@ -1,4 +1,4 @@
-program_file = open('./input.txt', 'r')
+program_file = open('input.txt', 'r')
 program_string_array = program_file.read().strip('\n').split(',')
 
 program = [int(i) for i in program_string_array]

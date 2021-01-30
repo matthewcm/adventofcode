@@ -1,7 +1,7 @@
 import math
 
 
-pathsFile = open('./input.txt', 'r')
+pathsFile = open('input.txt', 'r')
 pathsLines = pathsFile.read().split('\n')
 
 pathOne = pathsLines[0].split(',');
