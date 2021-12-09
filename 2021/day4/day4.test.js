@@ -27,26 +27,30 @@ const testReport = [
 describe('bingo', () => {
   it('calculates winning board',() => {
     const winningBoard = winBingo(testReport)
+
     expect(winningBoard).toEqual(4512)
   })
+
   it('calculates winning board from file', () => {
     const file = fs.readFileSync("day4/day4.txt", 'utf-8')
     const game = file.split("\n")
-    console.log('game:', game)
+
     const winningBoard = winBingo(game)
+
     expect(winningBoard).toEqual(25410)
   })
+
   it('calculates losing board ', () => {
     const winningBoard = loseBingo(testReport)
     expect(winningBoard).toEqual(1924)
   })
+
   it('calculates losing board from file', () => {
     const file = fs.readFileSync("day4/day4.txt", 'utf-8')
     const game = file.split("\n")
-    console.log('game:', game)
+
     const winningBoard = loseBingo(game)
+
     expect(winningBoard).toEqual(2730)
   })
-
-
 })
