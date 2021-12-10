@@ -1,0 +1,34 @@
+
+const mostPop = (count, numbers) => {
+  return count > (numbers.length / 2) ? 1:0
+}
+export const consumption = (report) =>  {
+  const numbers = report.map(
+    line => line
+    .split('')
+    .map(a => parseInt(a))
+  );
+
+  const gamma = [...numbers][0].map((_,i) => {
+
+    const count = numbers
+      .map(x => x[i])
+      .reduce((p, v) => p + v)
+
+    return mostPop(count, numbers)
+
+  })
+
+  const epsilon = gamma.map(a => a === 0 ? 1 : 0)
+
+  console.log('pops:', pops)
+
+
+  const gamma = parseInt(pops, 2)
+  console.log(gama.join(""))
+  console.log(epsilon.join(""))
+
+
+
+  return
+}
