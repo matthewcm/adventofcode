@@ -1,4 +1,4 @@
-import { getStraightLines,generateBoard } from './day5';
+import { getStraightLines, generateBoard, pointsOfIntersection, intersectionCounts, getLines } from './day5';
 import fs from "fs"
 
 const testReport = [
@@ -15,45 +15,59 @@ const testReport = [
 ]
 
 describe('Hydrothermal venture', () => {
-  it.only('filter horizontal and vertical',() => {
+  it('filter horizontal and vertical',() => {
     const winningBoard = getStraightLines(testReport)
 
     expect(winningBoard.length).toEqual(6)
   })
   it('calculates point of intersection',() => {
-    const winningBoard = pointOfIntersection(
-      {p1:[0,9], p2:[5,9]},
-      {p1: [0,9], p2: [2,9]}
+    const intersections = pointsOfIntersection(
+     [[0,9],[5,9]],
+     [[0,9],[2,9]]
     )
 
-    expect(winningBoard.length).toEqual(9)
+
+    console.log('intersections:', intersections)
+    expect(intersections).toEqual([
+      '0,9', '1,9', '2,9'
+    ])
   })
-  it('generate board',() => {
-    const winningBoard = generateBoard(testReport)
+  it('generate counts of intersections',() => {
+    const straightLines = getStraightLines(testReport)
 
-    expect(winningBoard.length).toEqual(9)
-  })
-  it('calculates overlapping lines',() => {
-    const winningBoard = (testReport)
+    const counts = intersectionCounts(straightLines)
+    console.log('counts:', counts)
 
-    expect(winningBoard).toEqual(4512)
-  })
-
-  it('calculates winning board from file', () => {
-    const file = fs.readFileSync("day4/day4.txt", 'utf-8')
-    const game = file.split("\n")
-
-    const winningBoard = winBingo(game)
-
-    expect(winningBoard).toEqual(25410)
+    expect(counts).toEqual(5)
   })
 
-  it('calculates losing board ', () => {
+  it('calculates overlapping lines from file', () => {
+    const file = fs.readFileSync("day5/day5.txt", 'utf-8')
+    const lines = file.split("\n")
+
+    const straightLines = getStraightLines(lines)
+
+    const counts = intersectionCounts(straightLines)
+
+    expect(counts).toEqual(5280)
+
+  })
+
+  it.only('generate counts of intersections from diagonals ',() => {
+    const straightLines = getLines(testReport)
+
+    const counts = intersectionCounts(straightLines)
+    console.log('counts:', counts)
+
+    expect(counts).toEqual(5)
+  })
+
+  it.skip('calculates losing board ', () => {
     const winningBoard = loseBingo(testReport)
     expect(winningBoard).toEqual(1924)
   })
 
-  it('calculates losing board from file', () => {
+  it.skip('calculates losing board from file', () => {
     const file = fs.readFileSync("day4/day4.txt", 'utf-8')
     const game = file.split("\n")
 
