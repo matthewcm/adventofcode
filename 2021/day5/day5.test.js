@@ -1,4 +1,4 @@
-import {winBingo, loseBingo} from './day5';
+import { getStraightLines,generateBoard } from './day5';
 import fs from "fs"
 
 const testReport = [
@@ -15,7 +15,20 @@ const testReport = [
 ]
 
 describe('Hydrothermal venture', () => {
-  it.only('generate board',() => {
+  it.only('filter horizontal and vertical',() => {
+    const winningBoard = getStraightLines(testReport)
+
+    expect(winningBoard.length).toEqual(6)
+  })
+  it('calculates point of intersection',() => {
+    const winningBoard = pointOfIntersection(
+      {p1:[0,9], p2:[5,9]},
+      {p1: [0,9], p2: [2,9]}
+    )
+
+    expect(winningBoard.length).toEqual(9)
+  })
+  it('generate board',() => {
     const winningBoard = generateBoard(testReport)
 
     expect(winningBoard.length).toEqual(9)
