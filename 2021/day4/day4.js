@@ -81,8 +81,6 @@ const winningBoard = (rolls, boards) => {
       board => board.isBingo()
     )[0]
     if (winningBoard){
-      console.log('Bingo!')
-      console.log(winningBoard)
       return roll * winningBoard.score()
     }
   }
@@ -101,7 +99,6 @@ const losingBoard = (rolls, boards) => {
       board => {
         const isBingo = board.isBingo()
         if (isBingo){
-          console.log('Bingo!')
           score = roll * board.score()
         }
         return !isBingo

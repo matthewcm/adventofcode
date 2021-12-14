@@ -11,26 +11,19 @@ export const consumption = (report) =>  {
     .split('')
     .map(a => parseInt(a))
   ).filter(a=> a.length)
-  console.log('numbers.length:', numbers.length)
-
 
   const gamma = numbers[0].map((_,i) => {
-
-
     return mostPop(i, numbers)
-
   })
-
-  console.log('gamma:', gamma)
 
   const epsilon = gamma.map(a => a === 0 ? 1 : 0)
 
-  console.log('epsilon:', epsilon)
   const gammaRate = parseInt(gamma.join(''), 2)
   const epsilonRate = parseInt(epsilon.join(''), 2)
 
   return gammaRate * epsilonRate
 }
+
 export const lifeSupport = (report) =>  {
   const numbers = report.map(
     line => line
