@@ -1,4 +1,4 @@
-import {nextDay,nextNDays, readInput } from './day6';
+import {nextBigNDays, nextDay,nextNDays, readInput } from './day6';
 import fs from "fs"
 
 const agesInput = '3,4,3,1,2'
@@ -35,6 +35,22 @@ describe('Lanternfish', () => {
     expect(tomorrow.length).toEqual(5934)
   })
 
+  it('next 256 days', () => {
+    const ages = readInput(agesInput)
+    const tomorrow = nextBigNDays(ages, 256)
+
+    expect(tomorrow).toEqual(5934)
+  })
+  it('next 256 days from file', () => {
+    const file = fs.readFileSync("day6/day6.txt", 'utf-8')
+    const [line] = file.split("\n")
+
+    const ages = readInput(line)
+    const tomorrow = nextBigNDays(ages, 256)
+
+    expect(tomorrow).toEqual(5934)
+  })
+
   it('next 80 days from file', () => {
     const file = fs.readFileSync("day6/day6.txt", 'utf-8')
     const [line] = file.split("\n")
@@ -43,7 +59,7 @@ describe('Lanternfish', () => {
 
     const tomorrow = nextNDays(ages, 80)
 
-    expect(tomorrow.length).toEqual(5280)
+    expect(tomorrow.length).toEqual(393019)
 
   })
 
