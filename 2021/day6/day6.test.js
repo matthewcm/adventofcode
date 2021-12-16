@@ -1,4 +1,4 @@
-import {nextBigNDays, nextDay,nextNDays, readInput } from './day6';
+import {getAgesObject, howManyFish, nextBigNDays, nextDay,nextNDays, readInput } from './day6';
 import fs from "fs"
 
 const agesInput = '3,4,3,1,2'
@@ -7,60 +7,85 @@ describe('Lanternfish', () => {
   it('read input',() => {
     const ages = readInput(agesInput)
 
-    expect(ages).toEqual([3,4,3,1,2])
+    expect(ages).toEqual([1,2,3,3,4])
   })
+
   it('next day',() => {
-    const ages = readInput(agesInput)
+    const ageList = readInput(agesInput)
+    const ages = getAgesObject(ageList)
     const tomorrow = nextDay(ages)
 
-    expect(tomorrow).toEqual([2,3,2,0,1])
+    const expectedTomorrow = {
+      0:1,
+      1:1,
+      2:2,
+      3:1,
+      4:0,
+      5:0,
+      6:0,
+      7:0,
+      8:0
+    }
+    expect(tomorrow).toEqual(expectedTomorrow)
+
   })
 
-  it('next 2 days', () => {
-    const ages = readInput(agesInput)
-    const tomorrow = nextNDays(ages, 2)
+  it('how many fish after next 2 days', () => {
+    const ageList = readInput(agesInput)
+    const ages = getAgesObject(ageList)
 
-    expect(tomorrow).toEqual([1,2,1,6,0,8])
+    const thatDay = nextNDays(ages, 2)
+
+    expect(howManyFish(thatDay)).toEqual(6)
   })
   it('next 3 days', () => {
-    const ages = readInput(agesInput)
-    const tomorrow = nextNDays(ages, 3)
+    const ageList = readInput(agesInput)
+    const ages = getAgesObject(ageList)
 
-    expect(tomorrow).toEqual([0,1,0,5,6,7,8])
+    const thatDay = nextNDays(ages, 3)
+
+    expect(howManyFish(thatDay)).toEqual(7)
   })
   it('next 80 days', () => {
-    const ages = readInput(agesInput)
-    const tomorrow = nextNDays(ages, 80)
+    const ageList = readInput(agesInput)
+    const ages = getAgesObject(ageList)
 
-    expect(tomorrow.length).toEqual(5934)
-  })
+    const thatDay = nextNDays(ages, 80)
 
-  it('next 256 days', () => {
-    const ages = readInput(agesInput)
-    const tomorrow = nextBigNDays(ages, 256)
-
-    expect(tomorrow).toEqual(5934)
-  })
-  it('next 256 days from file', () => {
-    const file = fs.readFileSync("day6/day6.txt", 'utf-8')
-    const [line] = file.split("\n")
-
-    const ages = readInput(line)
-    const tomorrow = nextBigNDays(ages, 256)
-
-    expect(tomorrow).toEqual(5934)
+    expect(howManyFish(thatDay)).toEqual(5934)
   })
 
   it('next 80 days from file', () => {
     const file = fs.readFileSync("day6/day6.txt", 'utf-8')
     const [line] = file.split("\n")
+    const agesList = readInput(line)
+    const ages = getAgesObject(agesList)
 
-    const ages = readInput(line)
+    const thatDay = nextNDays(ages, 80)
 
-    const tomorrow = nextNDays(ages, 80)
+    expect(howManyFish(thatDay)).toEqual(393019)
 
-    expect(tomorrow.length).toEqual(393019)
+  })
 
+  it('next 256 days', () => {
+    const agesList = readInput(agesInput)
+    const ages = getAgesObject(agesList)
+
+    const thatDay = nextNDays(ages, 256)
+
+    expect(howManyFish(thatDay)).toEqual(26984457539)
+  })
+
+
+  it('next 256 days from file', () => {
+    const file = fs.readFileSync("day6/day6.txt", 'utf-8')
+    const [line] = file.split("\n")
+    const agesList = readInput(line)
+    const ages = getAgesObject(agesList)
+
+    const lanternfishCount = nextBigNDays(ages, 256)
+
+    expect(lanternfishCount).toEqual(1757714216975)
   })
 
 })

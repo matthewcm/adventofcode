@@ -2,19 +2,13 @@ export const readInput = input => {
   return input
     .split(',')
     .map(age => parseInt(age))
+    .sort((a,b) => a - b)
 }
 export const nextDay = (ages) => {
-  const newAges = []
-
-  const newBorn = () => {
-    newAges.push(8)
-    return 6
-  }
-
 
   const count = {
-    1:0,
     0:0,
+    1:0,
     2:0,
     3:0,
     4:0,
@@ -23,16 +17,21 @@ export const nextDay = (ages) => {
     7:0,
     8:0
   }
-  Object.keys(count).forEach(b => {
-    const k = parseInt(b)
-    if (k === 8) return count[b] = ages[0] || 0
-    if (k === 6) return count[b] = (ages[0]|| 0) + (ages[7] || 0)
-    return count[k] = ages[k + 1] || 0
+
+  Object.keys(count).forEach(key => {
+    const age = parseInt(key)
+    if (age === 8) return count[age] = ages[0] || 0
+    if (age === 6) return count[age] = (ages[0]|| 0) + (ages[7] || 0)
+    return count[age] = ages[age + 1] || 0
   })
+
   return count
-
-
 }
+export const howManyFish = counts => (
+  Object
+  .values(counts)
+  .reduce((p,v) => p + v)
+)
 
 export const nextNDays = (ages, n) => {
 
@@ -40,27 +39,25 @@ export const nextNDays = (ages, n) => {
 
   return nextDay(nextNDays(ages, n-1))
 }
-export const nextBigNDays = (ages, n) => {
+
+export const getAgesObject = ageList => {
+
   let counts = {}
 
-  const countPoints =(points ) => {
-    points.forEach(point => {
-      if (!counts[point]) counts[point] = 1
-      else counts[point] ++
-    })
-  }
-  countPoints(ages)
+  ageList.forEach(point => {
+    if (!counts[point]) counts[point] = 1
+    else counts[point] ++
+  })
 
+  return counts
+}
+
+export const nextBigNDays = (ages, n) => {
+  let counts = ages
 
   for (let d = 0; d < n; d++){
-    counts =( nextDay(counts))
+    counts = nextDay(counts)
   }
-    console.log('counts:', counts)
 
-  console.log('Object.values(counts):',
-    Object.values(counts)
-  .reduce((p,v) => p +v)
-  )
-  return Object.values(counts)
-  .reduce((p,v) => p +v)
+  return howManyFish(counts)
 }
