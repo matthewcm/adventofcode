@@ -1,30 +1,43 @@
-import { cost, lowestCost, readInput } from './day7';
+import { cost, costCurve, lowestCost, lowestCostCurve, readInput } from './day7';
 import fs from "fs"
 
 const agesInput = '16,1,2,0,4,2,7,1,2,14'
 
 describe('Whales', () => {
-  it.only('cost',() => {
+  it('cost',() => {
     const ages = readInput(agesInput)
     const costOf = cost(ages, 2)
 
     expect(costOf).toEqual(37)
   })
 
-  it.only('lowest cost', () => {
+  it('lowest cost', () => {
     const ages = readInput(agesInput)
     const cost = lowestCost(ages, 2)
 
     expect(cost).toEqual(37)
   })
-  it('next 3 days', () => {
-    const ages = readInput(agesInput)
-    const tomorrow = nextNDays(ages, 3)
 
-    expect(tomorrow).toEqual([0,1,0,5,6,7,8])
+  it('lowest cost', () => {
+    const ages = readInput(agesInput)
+    const cost = lowestCost(ages, 2)
+
+    expect(cost).toEqual(37)
+  })
+  it('lowest cost curve', () => {
+    const ages = readInput(agesInput)
+    const cost = costCurve(ages, 5)
+
+    expect(cost).toEqual(168)
+  })
+  it('lowest cost', () => {
+    const ages = readInput(agesInput)
+    const cost = lowestCostCurve(ages, 2)
+
+    expect(cost).toEqual(168)
   })
 
-  it.only('next 256 days from file', () => {
+  it('next 256 days from file', () => {
     const file = fs.readFileSync("day7/day7.txt", 'utf-8')
     const [line] = file.split("\n")
 
@@ -34,16 +47,15 @@ describe('Whales', () => {
     expect(lowCost).toEqual(347449)
   })
 
-  it('next 80 days from file', () => {
-    const file = fs.readFileSync("day6/day6.txt", 'utf-8')
+  it('next 256 days from file', () => {
+    const file = fs.readFileSync("day7/day7.txt", 'utf-8')
     const [line] = file.split("\n")
 
     const ages = readInput(line)
+    const lowCost = lowestCostCurve(ages)
 
-    const tomorrow = nextNDays(ages, 80)
-
-    expect(tomorrow).toEqual(347449)
-
+    expect(lowCost).toEqual(347449)
   })
+
 
 })
