@@ -1,60 +1,54 @@
-import { cost, costCurve, lowestCost, lowestCostCurve, readInput } from './day7';
+import { linearFuelCost, lowestFuelCost, seriesFuelCost, readInput } from './day7';
 import fs from "fs"
 
-const agesInput = '16,1,2,0,4,2,7,1,2,14'
+const positionsInput = '16,1,2,0,4,2,7,1,2,14'
 
-describe('Whales', () => {
-  it('cost',() => {
-    const ages = readInput(agesInput)
-    const costOf = cost(ages, 2)
+describe('The Treachery of Whales', () => {
+  it('horizontal fuel cost for position 2',() => {
+    const positions = readInput(positionsInput)
+    const costOf = linearFuelCost(positions, 2)
 
     expect(costOf).toEqual(37)
   })
 
-  it('lowest cost', () => {
-    const ages = readInput(agesInput)
-    const cost = lowestCost(ages, 2)
+  it('lowest fuel cost for input positions', () => {
+    const positions = readInput(positionsInput)
+    const cost = lowestFuelCost(positions)
 
     expect(cost).toEqual(37)
   })
 
-  it('lowest cost', () => {
-    const ages = readInput(agesInput)
-    const cost = lowestCost(ages, 2)
-
-    expect(cost).toEqual(37)
-  })
-  it('lowest cost curve', () => {
-    const ages = readInput(agesInput)
-    const cost = costCurve(ages, 5)
+  it('fuel cost of position 5 for input positions with series formula', () => {
+    const positions = readInput(positionsInput)
+    const cost = seriesFuelCost(positions, 5)
 
     expect(cost).toEqual(168)
   })
-  it('lowest cost', () => {
-    const ages = readInput(agesInput)
-    const cost = lowestCostCurve(ages, 2)
+  it('lowest fuel cost for input positions with series formula ', () => {
+    const positions = readInput(positionsInput)
+    const cost = lowestFuelCost(positions, seriesFuelCost)
 
     expect(cost).toEqual(168)
   })
 
-  it('next 256 days from file', () => {
+  it('lowest fuel cost from file', () => {
     const file = fs.readFileSync("day7/day7.txt", 'utf-8')
     const [line] = file.split("\n")
 
-    const ages = readInput(line)
-    const lowCost = lowestCost(ages)
+    const positions = readInput(line)
+    const cost = lowestFuelCost(positions)
 
-    expect(lowCost).toEqual(347449)
+    expect(cost).toEqual(347449)
   })
 
-  it('next 256 days from file', () => {
+  it('lowest series fuel cost from file', () => {
     const file = fs.readFileSync("day7/day7.txt", 'utf-8')
     const [line] = file.split("\n")
 
-    const ages = readInput(line)
-    const lowCost = lowestCostCurve(ages)
+    const positions = readInput(line)
+    const cost = lowestFuelCost(positions, seriesFuelCost)
 
-    expect(lowCost).toEqual(347449)
+    expect(cost).toEqual(98039527)
   })
 
 

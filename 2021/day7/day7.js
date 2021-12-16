@@ -6,60 +6,41 @@ export const readInput = input => {
 }
 
 
-export const cost = (positions, alignment) => {
-  return positions.map(p => Math.abs(p - alignment))
+export const linearFuelCost = (positions, alignment) => (
+  positions
+  .map(p => Math.abs(p - alignment))
   .reduce((p,v) => p + v)
-}
+)
 
 const seriesSum = n => (
   (n * (n + 1) / 2)
 )
-export const costCurve = (positions, alignment) => {
-  const curve = positions.map(p => seriesSum(Math.abs(p - alignment)))
-  // console.log('curve:', curve)
 
-  return curve
+export const seriesFuelCost = ( positions, alignment) => (
+  positions
+  .map(p => seriesSum(Math.abs(p - alignment)))
   .reduce((p,v) => p + v)
-}
+)
 
-export const lowestCost= (positions) => {
-  const mean = Math.round(cost(positions, 0) / positions.length)
 
-  const lower = positions[positions.length - 1] > 2 * (mean)
+export const lowestFuelCost = (positions, costFunction = linearFuelCost ) => {
 
-  console.log(mean)
-  console.log(lower)
-  const start = lower ? 0: mean
-  const finish = lower ? mean : positions[positions.length -1]
+  const mean = Math.round(linearFuelCost(positions, 0) / positions.length)
 
-    let smallest = cost(positions , start)
+  const leftPosition = positions[0]
+  const rightPosition = positions[positions.length - 1]
+
+  const isLower =  rightPosition > 2 * (mean)
+
+  const start = isLower ? leftPosition : mean
+  const finish = isLower ? mean : rightPosition
+
+  let smallest = costFunction(positions , start)
+
   for (let i = start +1; i <= finish; i++){
-    const c = cost(positions, i)
-
+    const c = costFunction(positions, i)
     if (c < smallest) smallest = c
   }
 
   return smallest
-
-}
-
-export const lowestCostCurve = (positions) => {
-  const mean = Math.round(cost(positions, 0) / positions.length)
-
-  const lower = positions[positions.length - 1] > 2 * (mean)
-
-  console.log(mean)
-  console.log(lower)
-  const start = lower ? 0: mean
-  const finish = lower ? mean : positions[positions.length -1]
-
-    let smallest = costCurve(positions , start)
-  for (let i = start +1; i <= finish; i++){
-    const c = costCurve(positions, i)
-
-    if (c < smallest) smallest = c
-  }
-
-  return smallest
-
 }
