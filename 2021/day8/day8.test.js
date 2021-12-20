@@ -1,55 +1,80 @@
-import {stuff} from './day8';
+import {readInput, getUniqueOutputCount, getOutputDigitValue, sumAllOutputValues} from './day8';
 import fs from "fs"
 
-const positionsInput = '16,1,2,0,4,2,7,1,2,14'
+const entriesInput = [
+    "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe",
+    "edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc",
+    "fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef | cg cg fdcagb cbg",
+    "fbegcd cbd adcefb dageb afcb bc aefdc ecdab fgdeca fcdbega | efabcd cedba gadfec cb",
+    "aecbfdg fbg gf bafeg dbefa fcge gcbea fcaegb dgceab fcbdga | gecf egdcabf bgf bfgea",
+    "fgeab ca afcebg bdacfeg cfaedg gcfdb baec bfadeg bafgc acf | gebdcfa ecba ca fadegcb",
+    "dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbcadfe",
+    "bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef",
+    "egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb",
+    "gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce",
+    ""
+]
+
 
 describe('Seven Segment Search', () => {
-  it.only('horizontal fuel cost for position 2',() => {
-    // const positions = readInput(positionsInput)
-    // const costOf = linearFuelCost(positions, 2)
-
-    // expect(costOf).toEqual(37)
+  it('reads the entries',() => {
+    const segments = readInput(entriesInput)
+    expect(segments[0]).toEqual([[
+      "be",
+      "abcdefg",
+      "bcdefg",
+      "acdefg",
+      "bceg",
+      "cdefg",
+      "abdefg",
+      "bcdef",
+      "abcdf",
+      "bde",
+    ],[
+      "abcdefg",
+      "bcdef",
+      "bcdefg",
+      "bceg",
+    ]])
   })
 
-  it('lowest fuel cost for input positions', () => {
-    const positions = readInput(positionsInput)
-    const cost = lowestFuelCost(positions)
+  it('calulates unique outputs', () => {
+    const entries = readInput(entriesInput)
+    const uniqueOutputCount = getUniqueOutputCount(entries)
 
-    expect(cost).toEqual(37)
+    expect(uniqueOutputCount).toEqual(26)
   })
 
-  it('fuel cost of position 5 for input positions with series formula', () => {
-    const positions = readInput(positionsInput)
-    const cost = seriesFuelCost(positions, 5)
+  it('calculates unique outputs from file', () => {
+    const file = fs.readFileSync("day8/day8.txt", 'utf-8')
+    const lines = file.split("\n")
+    const entries = readInput(lines)
 
-    expect(cost).toEqual(168)
-  })
-  it('lowest fuel cost for input positions with series formula ', () => {
-    const positions = readInput(positionsInput)
-    const cost = lowestFuelCost(positions, seriesFuelCost)
+    const uniqueOutputCount =  getUniqueOutputCount(entries)
 
-    expect(cost).toEqual(168)
+    expect(uniqueOutputCount).toEqual(239)
   })
 
-  it('lowest fuel cost from file', () => {
-    const file = fs.readFileSync("day7/day7.txt", 'utf-8')
-    const [line] = file.split("\n")
+  it('calulates output digit value', () => {
+    const [entry] = readInput(["acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf"])
+    const outputDigitValue = getOutputDigitValue(entry)
 
-    const positions = readInput(line)
-    const cost = lowestFuelCost(positions)
-
-    expect(cost).toEqual(347449)
+    expect(outputDigitValue).toEqual(5353)
   })
 
-  it('lowest series fuel cost from file', () => {
-    const file = fs.readFileSync("day7/day7.txt", 'utf-8')
-    const [line] = file.split("\n")
+  it('calulates sum digit value', () => {
+    const entries = readInput(entriesInput)
+    const outputDigitValue = sumAllOutputValues(entries)
 
-    const positions = readInput(line)
-    const cost = lowestFuelCost(positions, seriesFuelCost)
-
-    expect(cost).toEqual(98039527)
+    expect(outputDigitValue).toEqual(61229)
   })
 
+  it('calulates sum digit value from file', () => {
+    const file = fs.readFileSync("day8/day8.txt", 'utf-8')
+    const lines = file.split("\n")
+    const entries = readInput(lines)
+    const outputDigitValue = sumAllOutputValues(entries)
 
+    expect(outputDigitValue).toEqual(946346)
+  })
 })
