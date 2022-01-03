@@ -49,7 +49,7 @@ describe('Seven Segment Search', () => {
     const basinPoints = getBasins(entries)
 
 
-    expect(basinPoints).toEqual(1134)
+    expect(basinPoints).toEqual(1391940)
 
   })
 
